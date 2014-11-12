@@ -46,7 +46,9 @@ $(document).ready(function() {
     else {
       // response contains id and card, which contains additional card details
       var token = response.id;
-      alert('Success token is ' + token);
+      // alert('Success token is ' + token);
+
+      sendChargeTokenToRails(token);
 
 // -------------------------------------------------------------
       // this appends the token as a hidden field on the form
@@ -56,6 +58,26 @@ $(document).ready(function() {
       // $form.get(0).submit();
     }
   }
+
+  var sendChargeTokenToRails = function(token){
+    $.ajax({
+      url: 'http://localhost:3000/charges',
+      type: 'POST',
+      dataType: 'json',
+      data: {stripeToken: token},
+    })
+    .done(function() {
+      alert("success");
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        alert(xhr.responseText);
+        alert(textStatus);
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+  };
 
 });
 
