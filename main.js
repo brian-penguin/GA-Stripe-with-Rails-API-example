@@ -28,6 +28,7 @@ $(document).ready(function() {
     Stripe.card.createToken($form, stripeResponseHandler);
 
     // Prevent the form from submitting with the default action
+    // - could also just use prevent default
     return false;
   });
 
@@ -35,19 +36,24 @@ $(document).ready(function() {
   function stripeResponseHandler(status, response) {
     var $form = $('#payment-form');
 
+    // Check for errors and render/reset
     if (response.error) {
       // Show the errors on the form
       $form.find('.payment-errors').text(response.error.message);
+      // Reactivate the form submit
       $form.find('button').prop('disabled', false);
     }
     else {
       // response contains id and card, which contains additional card details
       var token = response.id;
-      console.log(token);
-      // Insert the token into the form so it gets submitted to the server
-      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-      // and submit
-      $form.get(0).submit();
+      alert('Success token is ' + token);
+
+// -------------------------------------------------------------
+      // this appends the token as a hidden field on the form
+      //$form.append($('<input type="hidden" name="stripeToken" />').val(token));
+
+      // this line refreshes the page again
+      // $form.get(0).submit();
     }
   }
 
