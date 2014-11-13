@@ -1,4 +1,5 @@
 class ChargesController < ApplicationController
+  respond_to :json
 
   def create
     # Charge amount in pennies
@@ -20,12 +21,14 @@ class ChargesController < ApplicationController
       :currency => 'usd'
     )
 
-    respond_to do |format|
-      msg = { :status => "ok", :message => "Success!"}
-      format.json  { render :json => msg }
-    end
+    render json: @amount, status: 'ok'
   # In case of invalid card or failed charge
   # rescue Stripe::CardError => e
 
   end
+
+  # def charges_params
+  #   params.require(:charge).permit(:stripeToken)
+  # end
+
 end

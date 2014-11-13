@@ -43,3 +43,8 @@ gem 'dotenv-rails', :groups => [:development, :test]
 
 # Add Stripe Gem for creating charges and interacting with Stripe APi
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+
+# For accepting ajax
+gem 'rack-cors', :require => 'rack/cors'
+
+# gem 'rails-api'

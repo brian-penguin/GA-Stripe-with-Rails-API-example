@@ -47,31 +47,35 @@ $(document).ready(function() {
       // response contains id and card, which contains additional card details
       var token = response.id;
       // alert('Success token is ' + token);
+      console.log(token);
+      // this appends the token as a hidden field on the form()
+      // $form.append($('<input type="hidden" name="stripeToken" />').val(token));
 
       sendChargeTokenToRails(token);
 
 // -------------------------------------------------------------
-      // this appends the token as a hidden field on the form
-      //$form.append($('<input type="hidden" name="stripeToken" />').val(token));
 
-      // this line refreshes the page again
-      // $form.get(0).submit();
+      // this bit refreshes the page again
+      alert('payment successful');
+      $form.get(0).submit();
+
     }
   }
-
+  // Just send the token to Rails
   var sendChargeTokenToRails = function(token){
     $.ajax({
       url: 'http://localhost:3000/charges',
       type: 'POST',
       dataType: 'json',
-      data: {stripeToken: token},
+      data:{stripeToken:token}
     })
     .done(function() {
       alert("success");
     })
     .fail( function(xhr, textStatus, errorThrown) {
-        alert(xhr.responseText);
-        alert(textStatus);
+      console.log(xhr);
+      console.log(errorThrown);
+      alert('error');
     })
     .always(function() {
       console.log("complete");
